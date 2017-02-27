@@ -1,8 +1,11 @@
 package main
 
 import (
+	"encoding/json"
+	"io/ioutil"
 	"log"
 	"math/rand"
+	"net/http"
 	"strconv"
 
 	"github.com/line/line-bot-sdk-go/linebot"
@@ -21,16 +24,40 @@ func generateJoinMessage() []linebot.Message {
 
 }
 
-func generateMessage(message *linebot.TextMessage) []linebot.Message {
+type Count struct {
+	Total int `json:"total"`
+}
+
+func generateMessage(message *linebot.TextMessage) ([]linebot.Message, error) {
 
 	var messages []linebot.Message
 
 	if message.Text == "おしえて" {
-		messages = createReplyMessage("いいよー")
-		return messages
+
+		log.Println("おしえて")
+		countJSON, err := requestCountsJSON()
+		if err != nil {
+			log.Println(err)
+			text := linebot.NewTextMessage("エラーでーす")
+			messages = append(messages, text)
+			return messages, nil
+		}
+		log.Printf("%T\n", countJSON)
+
+		count := &Count{}
+		log.Println(count)
+
+		if err := json.Unmarshal(countJSON, count); err != nil {
+			log.Println(err)
+			return nil, err
+		}
+		log.Println(count)
+
+		messages = createReplyMessage(strconv.Itoa(count.Total))
+		return messages, nil
 	}
 	messages = createReplyMessage("...")
-	return messages
+	return messages, nil
 
 }
 
@@ -52,20 +79,45 @@ func createReplyMessage(text string) []linebot.Message {
 
 }
 
+func requestCountsJSON() ([]byte, error) {
+
+	res, err := http.Get("https://s3-ap-northeast-1.amazonaws.com/tsuchi-line-bot-count/count.json")
+	if err != nil {
+		log.Println(err)
+		return nil, err
+	}
+	defer res.Body.Close()
+	count, err := readResponseBody(res)
+	return count, err
+}
+
+func readResponseBody(res *http.Response) ([]byte, error) {
+
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		log.Println(err)
+		return nil, err
+	}
+	log.Println(string(body))
+	return body, nil
+}
+
+/*
 func countNumberOfPeople(events []*linebot.Event) int {
 
 	log.Println("OK!!")
 	var enter int
 
-	for _, event := range events {
-		/*
-			if event.Beacon.Type == linebot.BeaconEventTypeEnter {
-				enter += 1
-			}
-		*/
-		log.Println(event.Type)
-		enter += 1
-	}
+		for _, event := range events {
+
+				if event.Beacon.Type == linebot.BeaconEventTypeEnter {
+					enter += 1
+				}
+
+			log.Println(event.Type)
+			enter += 1
+		}
 
 	return enter
 }
+*/

@@ -44,8 +44,8 @@ func main() {
 			return
 		}
 
-		count := countNumberOfPeople(events)
-		log.Println(count)
+		// count := countNumberOfPeople(events)
+		// log.Println(count)
 
 		wg := &sync.WaitGroup{}
 		for _, event := range events {
@@ -83,8 +83,11 @@ func handleMessage(event *linebot.Event, bot *linebot.Client) {
 		switch message := event.Message.(type) {
 		case *linebot.TextMessage:
 
-			m := generateMessage(message)
-			_, err := bot.ReplyMessage(event.ReplyToken, m...).Do()
+			m, err := generateMessage(message)
+			if err != nil {
+				log.Println(err)
+			}
+			_, err = bot.ReplyMessage(event.ReplyToken, m...).Do()
 			if err != nil {
 				log.Println(err)
 			}
