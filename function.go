@@ -47,7 +47,25 @@ func createReplyMessage(text string) []linebot.Message {
 	sticker := linebot.NewStickerMessage("2", randomSticker())
 	var messages []linebot.Message
 	messages = append(messages, message, sticker)
-	log.Println(messages)
+
 	return messages
 
+}
+
+func countNumberOfPeople(events []*linebot.Event) int {
+
+	log.Println("OK!!")
+	var enter int
+
+	for _, event := range events {
+		/*
+			if event.Beacon.Type == linebot.BeaconEventTypeEnter {
+				enter += 1
+			}
+		*/
+		log.Println(event.Type)
+		enter += 1
+	}
+
+	return enter
 }

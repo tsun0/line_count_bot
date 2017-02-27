@@ -43,6 +43,10 @@ func main() {
 			}
 			return
 		}
+
+		count := countNumberOfPeople(events)
+		log.Println(count)
+
 		wg := &sync.WaitGroup{}
 		for _, event := range events {
 			log.Printf("%+v", event)
@@ -50,7 +54,6 @@ func main() {
 				log.Println("verify message received")
 				return
 			}
-			// handleMessage(event, bot)
 			wg.Add(1)
 			go func() {
 				handleMessage(event, bot)
