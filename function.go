@@ -101,23 +101,3 @@ func readResponseBody(res *http.Response) ([]byte, error) {
 	log.Println(string(body))
 	return body, nil
 }
-
-/*
-func countNumberOfPeople(events []*linebot.Event) int {
-
-	log.Println("OK!!")
-	var enter int
-
-		for _, event := range events {
-
-				if event.Beacon.Type == linebot.BeaconEventTypeEnter {
-					enter += 1
-				}
-
-			log.Println(event.Type)
-			enter += 1
-		}
-
-	return enter
-}
-*/
