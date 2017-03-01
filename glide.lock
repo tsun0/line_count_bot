@@ -1,0 +1,52 @@
+hash: 843dab9349aec71b298a8795e9260f6317379302ec86f66e821e511028e1b33c
+updated: 2017-02-28T15:09:21.090104134+09:00
+imports:
+- name: github.com/apex/go-apex
+  version: b962b607b3e7d00b001f91f8fc2c2f247b10df74
+- name: github.com/aws/aws-sdk-go
+  version: 78568b07950e5e7948496878fe99b9436add41d4
+  subpackages:
+  - aws
+  - aws/awserr
+  - aws/awsutil
+  - aws/client
+  - aws/client/metadata
+  - aws/corehandlers
+  - aws/credentials
+  - aws/credentials/ec2rolecreds
+  - aws/credentials/endpointcreds
+  - aws/credentials/stscreds
+  - aws/defaults
+  - aws/ec2metadata
+  - aws/endpoints
+  - aws/request
+  - aws/session
+  - aws/signer/v4
+  - private/protocol
+  - private/protocol/json/jsonutil
+  - private/protocol/jsonrpc
+  - private/protocol/query
+  - private/protocol/query/queryutil
+  - private/protocol/rest
+  - private/protocol/xml/xmlutil
+  - private/waiter
+  - service/dynamodb
+  - service/sts
+- name: github.com/fujiwara/ridge
+  version: 68099559237e9e8d75e4a078dc946f7a89ade557
+- name: github.com/go-ini/ini
+  version: c437d20015c2ab6454b7a66a13109ff0fb99e17a
+- name: github.com/jmespath/go-jmespath
+  version: bd40a432e4c76585ef6b72d3fd96fb9b6dc7b68d
+- name: github.com/line/line-bot-sdk-go
+  version: 77b08ba543d57dd0965a929a9eccd3ac2e47fcd6
+  subpackages:
+  - linebot
+- name: github.com/pkg/errors
+  version: 248dadf4e9068a0b3e79f02ed0a610d935de5302
+- name: golang.org/x/net
+  version: 007e530097ad7f954752df63046b4036f98ba6a6
+  subpackages:
+  - context
+  - context/ctxhttp
+testImports: []
